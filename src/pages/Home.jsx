@@ -6,23 +6,23 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
     const navigate = useNavigate();
 
-    const [roomId, setRoomId] = useState('');
+    const [sessionId, setSessionId] = useState('');
     const [username, setUsername] = useState('');
-    const createNewRoom = (e) => {
+    const createNewSession = (e) => {
         e.preventDefault();
         const id = uuidV4();
-        setRoomId(id);
-        toast.success('Created a new room');
+        setSessionId(id);
+        toast.success('Created a new session');
     };
 
-    const joinRoom = () => {
-        if (!roomId || !username) {
-            toast.error('ROOM ID & username is required');
+    const joinSession = () => {
+        if (!sessionId || !username) {
+            toast.error('Session ID & Name is required');
             return;
         }
 
         // Redirect
-        navigate(`/editor/${roomId}`, {
+        navigate(`/editor/${sessionId}`, {
             state: {
                 username,
             },
@@ -31,56 +31,50 @@ const Home = () => {
 
     const handleInputEnter = (e) => {
         if (e.code === 'Enter') {
-            joinRoom();
+            joinSession();
         }
     };
     return (
-        <div className="homePageWrapper">
-            <div className="formWrapper">
+        <div className="flex items-center justify-center  h-screen">
+            <div className="flex flex-col items-center justify-center bg-[#232323] p-[20px] rounded-[10px] w-[400px] max-w-[90%]">
                 <img
-                    className="homePageLogo"
-                    src="/code-sync.png"
-                    alt="code-sync-logo"
+                    className="h-[80px] mb-3"
+                    src="/logo.png"
+                    alt="Synscribe Logo"
                 />
-                <h4 className="mainLabel">Paste invitation ROOM ID</h4>
-                <div className="inputGroup">
+                <h4 className="text-gray-400 text-xl mb-4">Enter the Session ID</h4>
+                <div className="flex flex-col">
                     <input
                         type="text"
                         className="inputBox"
-                        placeholder="ROOM ID"
-                        onChange={(e) => setRoomId(e.target.value)}
-                        value={roomId}
+                        placeholder="Session ID"
+                        onChange={(e) => setSessionId(e.target.value)}
+                        value={sessionId}
                         onKeyUp={handleInputEnter}
                     />
                     <input
                         type="text"
                         className="inputBox"
-                        placeholder="USERNAME"
+                        placeholder="Name"
                         onChange={(e) => setUsername(e.target.value)}
                         value={username}
                         onKeyUp={handleInputEnter}
                     />
-                    <button className="btn joinBtn" onClick={joinRoom}>
+                    <button className="btn joinBtn mb-3" onClick={joinSession}>
                         Join
                     </button>
-                    <span className="createInfo">
-                        If you don't have an invite then create &nbsp;
+                    <span className="text-gray-400">
+                        Don't have an invite? Create &nbsp;
                         <a
-                            onClick={createNewRoom}
+                            onClick={createNewSession}
                             href=""
                             className="createNewBtn"
                         >
-                            new room
+                            a new Session
                         </a>
                     </span>
                 </div>
             </div>
-            <footer>
-                <h4>
-                    Built with 💛 &nbsp; by &nbsp;
-                    <a href="https://github.com/codersgyan">Coder's Gyan</a>
-                </h4>
-            </footer>
         </div>
     );
 };
